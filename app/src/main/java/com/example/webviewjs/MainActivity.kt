@@ -14,7 +14,10 @@ class MainActivity : AppCompatActivity() {
 //        webView.loadUrl("file:///android_asset/index.html")
 //        webView.loadUrl("file:///android_asset/index2.html")
 //        webView.addJavascriptInterface(WebAppInterface(this), "Android")
-        webView.loadUrl("file:///android_asset/hoge.html")
-        webView.addJavascriptInterface(Hoge(webView), "hoge3")
+//        webView.loadUrl("file:///android_asset/hoge.html")
+//        webView.addJavascriptInterface(Hoge(webView), "hoge3")
+        // https://www.pixelimage.jp/blog/2012/04/loading_icon.html
+        webView.loadUrl("file:///android_asset/loading.html")
+        webView.addJavascriptInterface(Loading(webView), "Android")
     }
 }
