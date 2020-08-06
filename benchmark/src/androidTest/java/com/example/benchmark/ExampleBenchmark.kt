@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.annotation.LayoutRes
 import androidx.benchmark.junit4.BenchmarkRule
 import androidx.benchmark.junit4.measureRepeated
 import androidx.test.core.app.ApplicationProvider
@@ -32,14 +33,26 @@ class ExampleBenchmark {
         }
     }
 
+    // https://developer.android.com/studio/profile/benchmark#write-benchmark
     @Test
     fun simpleViewInflate() {
+        // ApplicationProvider.getApplicationContext()だとエラー
         val context = ApplicationProvider.getApplicationContext<Context>()
         val inflater = LayoutInflater.from(context)
         val root = FrameLayout(context)
 
+        // keepRunningは使えない
         benchmarkRule.measureRepeated {
             inflater.inflate(R.layout.activity_main, root, false)
         }
+    }
+
+    // hello-benchmarkより
+    private val inflater = LayoutInflater.from(ApplicationProvider.getApplicationContext<Context>())
+    private fun inflate(@LayoutRes resource: Int) = inflater.inflate(resource, null, false)
+
+    @Test
+    fun mainActivityInflation() = benchmarkRule.measureRepeated {
+        inflate(R.layout.activity_main)
     }
 }
